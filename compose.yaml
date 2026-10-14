@@ -1,4 +1,4 @@
-name: ad-ci4
+name: ci4-blumis
 
 services:
   php:
