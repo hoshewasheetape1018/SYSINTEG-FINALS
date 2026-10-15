@@ -1,27 +1,9 @@
 <header>
-    <a href="/"><img src="https://file.garden/ZrIPgCGn9kADc89z/Genopals/genopals-logo.png" alt="Genopals logo"
+    <a href="/"><img src="https://file.garden/ZrIPgCGn9kADc89z/blumis.png" alt="Blumies logo"
             height="65"></a>
 
     <nav>
-        <?= view('components/buttons/primary', [
-            'btnlink' => '/',
-            'btntitle' => 'CARE'
-        ]) ?>
-
-        <?= view('components/buttons/primary', [
-            'btnlink' => '/adopt',
-            'btntitle' => 'ADOPT'
-        ]) ?>
-
-        <?= view('components/buttons/primary', [
-            'btnlink' => '/',
-            'btntitle' => 'SHOP'
-        ]) ?>
-
-        <?= view('components/buttons/primary', [
-            'btnlink' => '/news',
-            'btntitle' => 'NEWS'
-        ]) ?>
+      
         <?php
         $session = session();
         $isLoggedIn = $session->get('isLoggedIn');
