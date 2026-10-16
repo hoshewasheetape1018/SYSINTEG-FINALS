@@ -193,6 +193,18 @@ class Database extends Config
     {
         parent::__construct();
 
+        // Docker cannot reliably expose environment variable names containing
+        // dots. These project-specific variables override the host .env values
+        // when the application is running inside Compose.
+        if ($host = getenv('BLUMIES_DB_HOST')) {
+            $this->default['hostname'] = $host;
+            $this->default['database'] = getenv('BLUMIES_DB_NAME') ?: $this->default['database'];
+            $this->default['username'] = getenv('BLUMIES_DB_USER') ?: $this->default['username'];
+            $this->default['password'] = getenv('BLUMIES_DB_PASSWORD') ?: $this->default['password'];
+            $this->default['port'] = (int) (getenv('BLUMIES_DB_PORT') ?: 3306);
+            $this->default['DBDriver'] = 'MySQLi';
+        }
+
         // Ensure that we always set the database group to 'tests' if
         // we are currently running an automated test suite, so that
         // we don't overwrite live data on accident.

@@ -10,15 +10,15 @@ class UsersSeeder extends Seeder
     {
         $now = date('Y-m-d H:i:s');
 
-        // if you want password that is hashed
-        $adminPassword = password_hash('admin123', PASSWORD_DEFAULT);
+        // Local development credentials. Never use this password in production.
+        $adminPassword = password_hash('123', PASSWORD_DEFAULT);
         $userPassword = password_hash('user123', PASSWORD_DEFAULT);
 
         $userData = [
             [
                 'username'        => 'admin',
                 'display_name'    => 'Administrator',
-                'email'           => 'admin@genopals.com',
+                'email'           => 'admin@blumies.test',
                 'password_hash'   => $adminPassword,
                 'coins'           => 9999,
                 'type'            => 'admin',
@@ -31,7 +31,7 @@ class UsersSeeder extends Seeder
             [
                 'username'        => 'testuser',
                 'display_name'    => 'Test User',
-                'email'           => 'user@genopals.com',
+                'email'           => 'user@blumies.test',
                 'password_hash'   => $userPassword,
                 'coins'           => 100,
                 'type'            => 'client',
@@ -43,6 +43,17 @@ class UsersSeeder extends Seeder
             ]
         ];
 
-        $this->db->table('users')->insertBatch($userData);
+        $users = $this->db->table('users');
+
+        foreach ($userData as $user) {
+            $existing = $users->where('username', $user['username'])->get()->getRowArray();
+
+            if ($existing) {
+                $users->where('id', $existing['id'])->update($user);
+                continue;
+            }
+
+            $users->insert($user);
+        }
     }
 }

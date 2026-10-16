@@ -80,6 +80,8 @@ class CreateUsersTable extends Migration
         ]);
 
         $this->forge->addKey('id', true);
+        $this->forge->addUniqueKey('username');
+        $this->forge->addUniqueKey('email');
         $this->forge->createTable('users');
     }
 

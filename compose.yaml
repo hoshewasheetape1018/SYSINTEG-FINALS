@@ -12,6 +12,11 @@ services:
       - /var/www/html/vendor
     environment:
       CI_ENVIRONMENT: development
+      BLUMIES_DB_HOST: mysql
+      BLUMIES_DB_NAME: app
+      BLUMIES_DB_USER: app
+      BLUMIES_DB_PASSWORD: app
+      BLUMIES_DB_PORT: 3306
     depends_on:
       mysql:
         condition: service_healthy
