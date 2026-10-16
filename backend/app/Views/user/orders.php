@@ -1,0 +1,3 @@
+<?= view('components/page_start', ['pageTitle' => $pageTitle]) ?>
+<section class="page-section"><div class="container-xl"><p class="eyebrow">Account</p><h1 class="section-title mb-5">My orders</h1><div class="surface-card overflow-hidden"><div class="table-responsive"><table class="table align-middle mb-0"><thead><tr><th>Order</th><th>Date</th><th>Status</th><th>Total</th><th></th></tr></thead><tbody><tr><td>#1001</td><td>October 17, 2026</td><td><span class="badge rounded-pill text-bg-warning">Processing</span></td><td>₱1,050.00</td><td class="text-end"><a class="btn btn-outline-brand btn-sm" href="/profile/orders/1001">Track</a></td></tr></tbody></table></div></div></div></section>
+<?= view('components/page_end') ?>

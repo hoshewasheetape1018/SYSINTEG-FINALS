@@ -11,17 +11,17 @@ class AdminUsers extends BaseController
     public function __construct()
     {
         $this->session = session();
+    }
 
-        // Check if user is logged in and is admin
-        if (!$this->session->get('isLoggedIn') || $this->session->get('type') !== 'admin') {
-            $this->session->setFlashdata('error', 'Error: You do not have access to the page.');
-            return redirect()->to('/')->send(); // Redirect to landing page
-        }
+    private function isAdmin(): bool
+    {
+        return (bool) $this->session->get('isLoggedIn') && $this->session->get('type') === 'admin';
     }
 
     // List all users
     public function index()
     {
+        if (!$this->isAdmin()) return redirect()->to('/')->with('error', 'You do not have access to that page.');
         $usersModel = new UsersModel();
         $users = $usersModel->orderBy('id', 'ASC')->findAll();
 
@@ -31,6 +31,7 @@ class AdminUsers extends BaseController
     // Show edit form
     public function edit($id)
     {
+        if (!$this->isAdmin()) return redirect()->to('/')->with('error', 'You do not have access to that page.');
         $usersModel = new UsersModel();
         $userEntity = $usersModel->find($id);
 
@@ -44,6 +45,7 @@ class AdminUsers extends BaseController
     // Handle form submission
     public function update($id)
     {
+        if (!$this->isAdmin()) return redirect()->to('/')->with('error', 'You do not have access to that page.');
         $usersModel = new UsersModel();
         $userEntity = $usersModel->find($id);
 
@@ -76,6 +78,7 @@ class AdminUsers extends BaseController
     // Delete user
 public function delete($id)
 {
+    if (!$this->isAdmin()) return redirect()->to('/')->with('error', 'You do not have access to that page.');
     $usersModel = new UsersModel();
     $userEntity = $usersModel->find($id);
 

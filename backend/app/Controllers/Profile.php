@@ -78,4 +78,14 @@ class Profile extends BaseController
 
         return redirect()->to('/profile/settings')->with('message', 'Profile updated successfully!');
     }
+
+    public function orders()
+    {
+        return view('user/orders', ['pageTitle' => 'My Orders']);
+    }
+
+    public function order($id)
+    {
+        return view('orders/detail', ['pageTitle' => 'Order #' . $id, 'orderId' => $id]);
+    }
 }

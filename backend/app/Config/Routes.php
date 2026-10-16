@@ -17,6 +17,9 @@ $routes->get('/', 'Users::index');
 
 $routes->get('about', 'Users::about');
 $routes->get('contact', 'Users::contact');
+$routes->get('support', 'Users::support');
+$routes->get('terms', 'Users::terms');
+$routes->get('privacy', 'Users::privacy');
 
 
 /*
@@ -109,6 +112,11 @@ $routes->post('notifications/read-all', 'Notifications::markAllAsRead');
 
 // Dashboard
 $routes->get('admin/dashboard', 'AdminDashboard::index');
+$routes->get('admin/users', 'AdminUsers::index');
+$routes->get('admin/users/edit/(:num)', 'AdminUsers::edit/$1');
+$routes->post('admin/users/update/(:num)', 'AdminUsers::update/$1');
+$routes->post('admin/users/delete/(:num)', 'AdminUsers::delete/$1');
+$routes->get('admin/pets', 'AdminPets::index');
 
 // Orders
 $routes->get('admin/orders', 'AdminOrders::index');

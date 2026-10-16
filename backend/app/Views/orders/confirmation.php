@@ -1,0 +1,3 @@
+<?= view('components/page_start', ['pageTitle' => $pageTitle]) ?>
+<section class="page-section"><div class="container-xl"><div class="surface-card empty-state"><div><i class="fa-regular fa-circle-check mb-4"></i><h1 class="section-title">Your order is confirmed!</h1><p class="text-muted-brand">Order #<?= esc($orderId) ?> has been received. We’ll send updates as it moves along.</p><div class="d-flex flex-wrap justify-content-center gap-3 mt-4"><a class="btn btn-brand" href="/profile/orders/<?= esc($orderId) ?>">Track order</a><a class="btn btn-outline-brand" href="/products">Keep shopping</a></div></div></div></div></section>
+<?= view('components/page_end') ?>

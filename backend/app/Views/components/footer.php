@@ -1,46 +1,12 @@
-<footer class="bg-black text-white py-4">
-    <div class="container">
-
-        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-4">
-
-            <nav class="d-flex flex-wrap justify-content-center gap-5">
-                <a href="/support" class="text-white text-decoration-none">Support</a>
-                <a href="/contact" class="text-white text-decoration-none">Contact Us</a>
-                <a href="/terms" class="text-white text-decoration-none">Terms of Use</a>
-                <a href="/privacy" class="text-white text-decoration-none">Privacy Policy</a>
-            </nav>
-
-            <div class="d-flex gap-3">
-                <a href="#" class="text-white fs-3" aria-label="Facebook">
-                    <i class="fa-brands fa-square-facebook"></i>
-                </a>
-
-                <a href="#" class="text-white fs-3" aria-label="Instagram">
-                    <i class="fa-brands fa-square-instagram"></i>
-                </a>
-
-                <a href="#" class="text-white fs-3" aria-label="TikTok">
-                    <i class="fa-brands fa-tiktok"></i>
-                </a>
-            </div>
-
+<footer class="site-footer mt-auto">
+    <div class="container-xl py-5">
+        <div class="row gy-4 align-items-start">
+            <div class="col-lg-4"><a class="brand-wordmark brand-wordmark-light text-decoration-none" href="/">Blumies</a><p class="footer-note mt-3 mb-0">Small joys, thoughtfully made.</p></div>
+            <div class="col-6 col-lg-2"><h2 class="footer-heading">Explore</h2><a href="/">Home</a><a href="/collections">Collections</a><a href="/products">Shop</a></div>
+            <div class="col-6 col-lg-2"><h2 class="footer-heading">Help</h2><a href="/contact">Contact</a><a href="/support">Support</a><a href="/profile/orders">Order tracking</a></div>
+            <div class="col-lg-4 text-lg-end"><div class="social-links d-flex gap-3 justify-content-lg-end"><a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a><a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a><a href="#" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a></div></div>
         </div>
-
-        <hr class="my-3">
-
-        <div class="d-flex flex-column flex-md-row justify-content-center align-items-center gap-4">
-            <p class="mb-0">
-                © 2026 Blumies. All rights reserved.
-            </p>
-
-            <a href="/terms" class="text-white text-decoration-none">
-                Terms of Service
-            </a>
-
-            <a href="/privacy" class="text-white text-decoration-none">
-                Privacy Policy
-            </a>
-        </div>
-
+        <div class="footer-bottom d-flex flex-column flex-md-row gap-3 justify-content-between mt-5 pt-4"><span>© 2026 Blumies</span><span><a href="/terms">Terms of Service</a><a href="/privacy" class="ms-4">Privacy Policy</a></span></div>
     </div>
 </footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
