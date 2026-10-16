@@ -29,4 +29,3 @@ jobs:
             **/node_modules/**
             **/.env
             **/writable/database.sqlite
-          dry-run: true
