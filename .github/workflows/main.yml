@@ -13,6 +13,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
 
+      - name: Install Composer dependencies
+        working-directory: ./backend
+        run: composer install --no-dev --prefer-dist --no-interaction --optimize-autoloader
+
       - name: Deploy to InfinityFree
         uses: SamKirkland/FTP-Deploy-Action@v4.4.0
         with:
