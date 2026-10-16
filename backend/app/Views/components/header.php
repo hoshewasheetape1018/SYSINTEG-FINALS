@@ -65,81 +65,81 @@
 
                     <?php if ($isLoggedIn): ?>
 
-                    <div class="dropdown notification-dropdown">
+                        <div class="dropdown notification-dropdown">
 
-                        <button class="btn nav-icon p-0 border-0" type="button" data-bs-toggle="dropdown"
-                            aria-expanded="false" aria-label="Notifications">
-                            <i class="fa-solid fa-bell"></i>
+                            <button class="btn nav-icon p-0 border-0" type="button" data-bs-toggle="dropdown"
+                                aria-expanded="false" aria-label="Notifications">
+                                <i class="fa-solid fa-bell"></i>
 
-                            <!-- Optional notification count -->
-                            <span class="notification-badge">3</span>
-                        </button>
+                                <!-- Optional notification count -->
+                                <span class="notification-badge">3</span>
+                            </button>
 
 
-                        <!-- Notification Dropdown -->
-                        <div class="dropdown-menu dropdown-menu-end notification-menu">
+                            <!-- Notification Dropdown -->
+                            <div class="dropdown-menu dropdown-menu-end notification-menu">
 
-                            <div class="notification-header">
-                                Recently Received Notifications
+                                <div class="notification-header">
+                                    Recently Received Notifications
+                                </div>
+
+
+                                <!-- Notification 1 -->
+                                <a href="/orders/1024" class="notification-item">
+                                    <div class="notification-title">
+                                        Shipping status
+                                    </div>
+
+                                    <div class="notification-message">
+                                        Your order has been shipped.
+                                    </div>
+                                </a>
+
+
+                                <!-- Notification 2 -->
+                                <a href="/orders/1024" class="notification-item">
+                                    <div class="notification-title">
+                                        Shipping status
+                                    </div>
+
+                                    <div class="notification-message">
+                                        Your order has been approved.
+                                    </div>
+                                </a>
+
+
+                                <!-- Notification 3 -->
+                                <a href="/orders/1024" class="notification-item">
+                                    <div class="notification-title">
+                                        Shipping status
+                                    </div>
+
+                                    <div class="notification-message">
+                                        Your order has been received.
+                                    </div>
+                                </a>
+
+
+                                <!-- View All -->
+                                <a href="/notifications" class="notification-view-all">
+                                    View All
+                                </a>
+
                             </div>
 
-
-                            <!-- Notification 1 -->
-                            <a href="/orders/1024" class="notification-item">
-                                <div class="notification-title">
-                                    Shipping status
-                                </div>
-
-                                <div class="notification-message">
-                                    Your order has been shipped.
-                                </div>
-                            </a>
-
-
-                            <!-- Notification 2 -->
-                            <a href="/orders/1024" class="notification-item">
-                                <div class="notification-title">
-                                    Shipping status
-                                </div>
-
-                                <div class="notification-message">
-                                    Your order has been approved.
-                                </div>
-                            </a>
-
-
-                            <!-- Notification 3 -->
-                            <a href="/orders/1024" class="notification-item">
-                                <div class="notification-title">
-                                    Shipping status
-                                </div>
-
-                                <div class="notification-message">
-                                    Your order has been received.
-                                </div>
-                            </a>
-
-
-                            <!-- View All -->
-                            <a href="/notifications" class="notification-view-all">
-                                View All
-                            </a>
-
                         </div>
-
-                    </div>
 
                     <?php endif; ?>
 
                     <?php if ($isLoggedIn): ?>
 
-                    <!-- ================================
+                        <!-- ================================
          CART
     ================================= -->
 
-                    <a href="/cart" class="nav-icon" aria-label="Shopping Cart">
-                        <i class="fa-solid fa-cart-shopping"></i>
-                    </a>
+                        <a href="/cart" class="nav-icon" aria-label="Shopping Cart">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </a>
 
                     <?php endif; ?>
 
@@ -149,75 +149,75 @@
 
                     <?php if ($isLoggedIn): ?>
 
-                    <!-- Logged-in Account -->
-                    <div class="dropdown">
+                        <!-- Logged-in Account -->
+                        <div class="dropdown">
 
-                        <button class="account-button" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <button class="account-button" type="button" data-bs-toggle="dropdown" aria-expanded="false">
 
-                            <i class="fa-solid fa-circle-user"></i>
+                                <i class="fa-solid fa-circle-user"></i>
 
-                            <span class="account-username">
-                                <?= esc($username) ?>
-                            </span>
+                                <span class="account-username">
+                                    <?= esc($username) ?>
+                                </span>
 
-                            <i class="fa-solid fa-chevron-down account-arrow"></i>
+                                <i class="fa-solid fa-chevron-down account-arrow"></i>
 
-                        </button>
-
-
-                        <ul class="dropdown-menu dropdown-menu-end">
-
-                            <li>
-                                <a class="dropdown-item" href="/profile">
-                                    Profile
-                                </a>
-                            </li>
-
-                            <li>
-                                <a class="dropdown-item" href="/profile/orders">
-                                    My Orders
-                                </a>
-                            </li>
-
-                            <li>
-                                <a class="dropdown-item" href="/profile/settings">
-                                    Settings
-                                </a>
-                            </li>
-
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-
-                            <li>
-                                <a class="dropdown-item" href="#" id="logout-link">
-                                    Log Out
-                                </a>
-                            </li>
-
-                        </ul>
-
-                    </div>
+                            </button>
 
 
-                    <!-- Hidden Logout Form -->
-                    <form id="logout-form" action="/logout" method="post" class="d-none"></form>
+                            <ul class="dropdown-menu dropdown-menu-end">
+
+                                <li>
+                                    <a class="dropdown-item" href="/profile">
+                                        Profile
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a class="dropdown-item" href="/profile/orders">
+                                        My Orders
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a class="dropdown-item" href="/profile/settings">
+                                        Settings
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+
+                                <li>
+                                    <a class="dropdown-item" href="#" id="logout-link">
+                                        Log Out
+                                    </a>
+                                </li>
+
+                            </ul>
+
+                        </div>
+
+
+                        <!-- Hidden Logout Form -->
+                        <form id="logout-form" action="/logout" method="post" class="d-none"></form>
 
 
                     <?php else: ?>
 
-                    <!-- Logged-out Account -->
-                    <div class="auth-links">
+                        <!-- Logged-out Account -->
+                        <div class="auth-links d-flex flex-column flex-md-row align-items-start align-items-md-center gap-3 gap-md-3">
 
-                        <a href="/signup" class="nav-auth-link">
-                            Register
-                        </a>
+                            <a href="/signup" class="nav-auth-link">
+                                Register
+                            </a>
 
-                        <a href="/login" class="nav-auth-link">
-                            Login
-                        </a>
+                            <a href="/login" class="nav-auth-link">
+                                Login
+                            </a>
 
-                    </div>
+                        </div>
 
                     <?php endif; ?>
 
@@ -231,19 +231,19 @@
 
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function() {
 
-    const logoutLink = document.getElementById('logout-link');
-    const logoutForm = document.getElementById('logout-form');
+        const logoutLink = document.getElementById('logout-link');
+        const logoutForm = document.getElementById('logout-form');
 
-    if (logoutLink && logoutForm) {
+        if (logoutLink && logoutForm) {
 
-        logoutLink.addEventListener('click', function(e) {
-            e.preventDefault();
-            logoutForm.submit();
-        });
+            logoutLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                logoutForm.submit();
+            });
 
-    }
+        }
 
-});
+    });
 </script>
