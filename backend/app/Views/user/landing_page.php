@@ -18,7 +18,7 @@
 
     <section id="hero">
         <h1>
-            Create and take care of your own virtual angel pet!
+Test
         </h1>
 
 <?php if (!session('isLoggedIn')): ?>
