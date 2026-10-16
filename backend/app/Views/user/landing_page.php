@@ -152,8 +152,6 @@
 
     </section>
 
-    <?= view('components/cta') ?>
-
 
     </body>
 
