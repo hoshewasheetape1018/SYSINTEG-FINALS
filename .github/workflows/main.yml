@@ -32,4 +32,5 @@ jobs:
             **/.git*/**
             **/node_modules/**
             **/.env
+            **/writable/if0_43188418_blumiesdb
             
