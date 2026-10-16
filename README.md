@@ -5,22 +5,17 @@
 
 <div align="center">
   <a href="https://github.com/hosheewashitape1018/">
-    <img src="https://file.garden/ZrIPgCGn9kADc89z/Genopals/genopals-logo.png" alt="Genopals" height="100">
+    <img src="https://file.garden/ZrIPgCGn9kADc89z/blumis.png" alt="Blumies" height="100">
   </a>
-<!-- * Title Section -->
-  <h3 align="center">AD - Genopals Project</h3>
-</div>
 
 <!-- * Description Section -->
 <div align="center">
-Genopals is a virtual pet site for raising virtual angel pets. <br>
 This repository uses a beginner-friendly CodeIgniter 4 template.  
 It helps teams quickly bootstrap backend + frontend projects, with simple sample modules that show how to extend the system.
 </div>
 
 <br/>
 
-![](https://visit-counter.vercel.app/counter.png?page=zyx-0314/ci4-template)
 
 <!-- ! Make sure it was similar to your github -->
 
@@ -56,26 +51,29 @@ It helps teams quickly bootstrap backend + frontend projects, with simple sample
 
 ## Overview
 
-This project provides the base layout for Genopals, a CodeIgniter 4 project with conventions for organized file structure, component usage, and modular development.
+This project provides the base layout for **BlumieS**, a CodeIgniter 4 e-commerce website with conventions for organized file structure, component usage, and modular development.
 
-It is designed to be simple to set up and a foundation for expanding new features as Genopals grows.
+It is designed to be simple to set up and serve as a foundation for expanding new features as BlumieS grows.
 
-**Genopals** is an interactive cozy web app centered around creativity, customization, and community features.
+**BlumieS** is a student-oriented online shop that sells ID laces, shirts, and other school-related products.
 
-It is designed to be simple to set up and a foundation for expanding new features as Genopals grows.
+It is designed to be simple to set up and provide a centralized platform for browsing products, placing orders, and managing order information.
 
-**Purpose**: a clean starting point for the Genopals web application.
+**Purpose**: A clean starting point for the BlumieS e-commerce web application.
 
-**Audience**: developers contributing to Genopals who want a consistent and scalable project structure.
+**Audience**: Developers contributing to BlumieS who want a consistent and maintainable project structure.
+
 ### Key Components
-| Component                 | Purpose                                                                   | Notes                                                                |
-| ------------------------- | ------------------------------------------------------------------------- | -------------------------------------------------------------------- |
-| **User & Auth System**    | Handles account creation, login, and profile data.                        | Uses CI4 sessions and MySQL for user management.                     |
-| **Inventory System**  | Manages collectible items, outfits, and customization data.               | Designed for flexible expansion (future wardrobe / avatar features). |
-| **CRUD Module**           | Example entity (`Posts` or `Tasks`) with create/read/update/delete.       | Demonstrates Controller → Service → Repository pattern.              |
-| **Dashboard / Home View** | Displays the main user area with cards, updates, or current outfits.      | Built with reusable components under `/views/components`.            |
-| **UI Components Library** | Includes reusable cards, buttons, and layout templates for consistent UI. | Located under `/views/components` and `/views/layouts`.              |
 
+| Component | Purpose | Notes |
+|---|---|---|
+| **User & Auth System** | Handles customer account creation, login, and profile data. | Uses CI4 sessions and the project database for user management. |
+| **Product & Collection System** | Manages products, product information, prices, images, and collections. | Designed to support the different products offered by BlumieS. |
+| **Shopping Cart & Order System** | Handles cart contents, checkout, order creation, and order information. | Connects customer orders with the database for centralized management. |
+| **Admin Dashboard** | Allows administrators to manage products, collections, and customer orders. | Includes order approval, status updates, and product management. |
+| **Notification System** | Provides customers with updates about their orders. | Uses predefined messages for statuses such as approved, shipped, delivered, or delayed. |
+| **Jotform API Integration** | Synchronizes completed website orders with BlumieS's existing Jotform workflow. | Uses the Jotform API as the project's external API integration. |
+| **UI Components Library** | Includes reusable buttons, cards, navigation, forms, and layout templates for consistent UI. | Located under `/views/components` and `/views/layouts`. |
 
  <!-- ! Start simple. Use these modules as **learning samples**; extend or replace them based on your project’s needs. -->
 
