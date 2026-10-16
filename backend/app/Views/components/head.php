@@ -247,8 +247,6 @@
             font-family: "Oleo Script Swash Caps", cursive;
             font-weight: 700;
 
-            -webkit-text-stroke: 2px var(--blumiespink);
-
                /* Fill */
             color: white;
 
