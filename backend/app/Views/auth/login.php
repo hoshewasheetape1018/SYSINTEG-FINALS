@@ -4,6 +4,7 @@
 
 <body>
     <?= view('components/header') ?>
+    <main>
   <?php if (session()->getFlashdata('success')): ?>
                     <div class="success-message">
                         <?= esc(session()->getFlashdata('success')) ?>
@@ -62,6 +63,7 @@
             </div>
         </div>
     </section>
+                            </main>
 
     <?= view('components/footer') ?>
 </body>

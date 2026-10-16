@@ -1,44 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
-    <?= view('components/head') ?>
-    
+<?= view('components/head') ?>
+
 <body>
 
     <!-- header -->
     <?= view('components/header') ?>
 
     <!-- error if from admin -->
-<?php if (session()->getFlashdata('error')): ?>
+    <?php if (session()->getFlashdata('error')): ?>
     <div class="error-message">
         <?= esc(session()->getFlashdata('error')) ?>
     </div>
-<?php endif; ?>
+    <?php endif; ?>
 
     <!-- start of landing page -->
+    <main>
+        <section id="hero">
+            <h1>
+                Test
+            </h1>
+        </section>
 
-    <section id="hero">
-        <h1>
-Test
-        </h1>
-
-<?php if (!session('isLoggedIn')): ?>
-    <?= view('components/buttons/secondary', [
-        'btnlink' => '/signup',
-        'btntitle' => 'SIGN UP'
-    ]) ?>
-<?php endif; ?>
-
-    </section>
-
-
-    <section id="section1">
-        test
-    </section>
-
-
-    </body>
+        <section id="section1">
+            test
+        </section>
+    </main>
 
     <!-- footer -->
     <?= view('components/footer') ?>
+
+</body>
+
 
 </html>
