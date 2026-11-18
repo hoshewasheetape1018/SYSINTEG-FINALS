@@ -122,6 +122,7 @@ $routes->get('admin/pets', 'AdminPets::index');
 $routes->get('admin/orders', 'AdminOrders::index');
 $routes->get('admin/orders/(:num)', 'AdminOrders::show/$1');
 $routes->post('admin/orders/(:num)/status', 'AdminOrders::updateStatus/$1');
+$routes->get('admin/orders/(:num)/proof', 'AdminOrders::proof/$1');
 
 // Products
 $routes->get('admin/products', 'AdminProducts::index');

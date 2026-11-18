@@ -38,6 +38,19 @@
 # database.default.DBPrefix =
 # database.default.port = 3306
 
+#--------------------------------------------------------------------
+# JOTFORM ORDER SYNC
+#--------------------------------------------------------------------
+
+# JOTFORM_API_KEY =
+# JOTFORM_FORM_ID = 263211686457058
+# Use https://eu-api.jotform.com for EU accounts or
+# https://hipaa-api.jotform.com for HIPAA accounts.
+# JOTFORM_API_URL = https://api.jotform.com
+# Optional explicit logical-field-to-question-ID mapping (JSON):
+# The included Blumies form (263211686457058) is mapped automatically.
+# JOTFORM_FIELD_MAP = '{"customer_name":"3","email":"4","phone":"5","street_address":"6","city":"7","region":"8","postal_code":"9","payment_reference":"15","comments":"21","delivery_method":"28"}'
+
 # If you use MySQLi as tests, first update the values of Config\Database::$tests.
 # database.tests.hostname = localhost
 # database.tests.database = ci4_test

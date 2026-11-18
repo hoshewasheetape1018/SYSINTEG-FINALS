@@ -12,7 +12,7 @@ class ClearDatabaseSeeder extends Seeder
 
         // Order matters: child tables first, then parents
         // List down your tables here
-        $tablesInOrder = ['users','pets'];
+        $tablesInOrder = ['order_items', 'orders', 'pets', 'users'];
 
         $db->disableForeignKeyChecks();
 

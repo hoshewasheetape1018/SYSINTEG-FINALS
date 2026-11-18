@@ -5,6 +5,8 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\UsersModel;
 use App\Models\PetModel;
+use App\Models\OrderItemModel;
+use App\Models\OrderModel;
 
 class Profile extends BaseController
 {
@@ -81,11 +83,30 @@ class Profile extends BaseController
 
     public function orders()
     {
-        return view('user/orders', ['pageTitle' => 'My Orders']);
+        $userId = (int) session()->get('user_id');
+        if (!$userId) return redirect()->to('/login');
+
+        return view('user/orders', [
+            'pageTitle' => 'My Orders',
+            'orders' => (new OrderModel())->where('user_id', $userId)->orderBy('id', 'DESC')->findAll(),
+        ]);
     }
 
     public function order($id)
     {
-        return view('orders/detail', ['pageTitle' => 'Order #' . $id, 'orderId' => $id]);
+        $userId = (int) session()->get('user_id');
+        if (!$userId) return redirect()->to('/login');
+
+        $order = (new OrderModel())->find((int) $id);
+        if (!$order || (int) $order['user_id'] !== $userId) {
+            return redirect()->to('/profile/orders')->with('error', 'Order not found.');
+        }
+
+        return view('orders/detail', [
+            'pageTitle' => 'Order #' . $id,
+            'orderId' => (int) $id,
+            'order' => $order,
+            'items' => (new OrderItemModel())->where('order_id', (int) $id)->findAll(),
+        ]);
     }
 }
