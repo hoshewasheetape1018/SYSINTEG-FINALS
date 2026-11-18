@@ -1,56 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<?= view('components/head') ?>
-
-<body>
-
-    <!-- header -->
-    <?= view('components/header') ?>
-
-    <!-- main content -->
-    <section id="signup">
-        <div class="container">
-
-
-<h2 class="title">Manage Pets</h2>
-
-<div class="table-container">
-    <table class="admin-table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Species</th>
-                <th>Owner</th>
-                <th>Health</th>
-                <th>Energy</th>
-                <th>Hunger</th>
-            </tr>
-        </thead>
-
-        <tbody>
-            <?php foreach ($pets as $p): ?>
-            <tr>
-                <td><?= $p['id'] ?></td>
-                <td><?= esc($p['name']) ?></td>
-                <td><?= ucfirst($p['species']) ?></td>
-                <td><?= esc($p['username']) ?></td>
-                <td><?= $p['health'] ?></td>
-                <td><?= $p['energy'] ?></td>
-                <td><?= $p['hunger'] ?></td>
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-</div>
-    
-        </div>
-    </section>
-    </section>
-
-</body>
-
-<!-- footer -->
-<?= view('components/footer') ?>
-
-</html>
+<?= view('components/admin_page_start', ['pageTitle' => 'Pet Management']) ?>
+<div class="admin-topbar"><div class="admin-search"><i class="fa-solid fa-magnifying-glass"></i><input class="form-control" type="search" placeholder="Search pets" data-admin-search="#petsTable"></div></div>
+<div class="admin-breadcrumb"><a href="/admin/dashboard"><i class="fa-solid fa-house"></i></a><span class="slash">/</span><span>Pet Management</span></div>
+<div><h1 class="admin-page-title">Pet Management</h1><p class="admin-page-subtitle">Review the pets registered to customer accounts.</p></div>
+<div class="admin-stat-band" style="--stat-count:2"><div class="admin-stat"><span class="admin-stat-label">Total Pets</span><span class="admin-stat-value"><?= count($pets) ?></span></div><div class="admin-stat"><span class="admin-stat-label">Pet Owners</span><span class="admin-stat-value"><?= count(array_unique(array_column($pets,'username'))) ?></span></div></div>
+<div class="admin-tools"><div class="admin-search"><i class="fa-solid fa-magnifying-glass"></i><input class="form-control" type="search" placeholder="Filter pet list" data-admin-search="#petsTable"></div></div>
+<div class="admin-table-shell table-responsive"><table class="table align-middle" id="petsTable"><thead><tr><th>Pet</th><th>Species</th><th>Owner</th><th>Health</th><th>Energy</th><th>Hunger</th></tr></thead><tbody><?php foreach($pets as $pet): ?><tr data-admin-row><td><strong><i class="fa-solid fa-paw me-2"></i><?= esc($pet['name']) ?></strong></td><td><?= esc(ucfirst($pet['species'])) ?></td><td><?= esc($pet['username']) ?></td><td><span class="admin-price"><?= esc($pet['health']) ?></span></td><td><?= esc($pet['energy']) ?></td><td><?= esc($pet['hunger']) ?></td></tr><?php endforeach; ?></tbody></table></div>
+<?= view('components/admin_page_end') ?>

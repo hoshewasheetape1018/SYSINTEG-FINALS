@@ -25,7 +25,14 @@ class AdminOrders extends BaseController
             ->orderBy('orders.id', 'DESC')
             ->findAll();
 
-        return view('admin/orders', ['pageTitle' => 'Manage Orders', 'orders' => $orders]);
+        return view('admin/orders', [
+            'pageTitle' => 'Manage Orders',
+            'orders' => $orders,
+            'totalOrders' => count($orders),
+            'newOrders' => count(array_filter($orders, static fn(array $order): bool => $order['status'] === 'received')),
+            'completedOrders' => count(array_filter($orders, static fn(array $order): bool => $order['status'] === 'delivered')),
+            'cancelledOrders' => count(array_filter($orders, static fn(array $order): bool => $order['status'] === 'cancelled')),
+        ]);
     }
 
     public function show($id)

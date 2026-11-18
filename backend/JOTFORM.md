@@ -18,6 +18,20 @@ The project is mapped to **Lanyard Order Form**, form ID `263211686457058`:
 
 The form's Product List (question 10) cannot be populated through Jotform's Add Submission API. Product details are therefore written to Comments or Suggestions (question 21), so the complete order is still visible in Jotform. The API also cannot upload a local file to Proof of Payment (question 14); the receipt stays in protected local storage and is available from the admin order page.
 
+## Product and category synchronization
+
+Jotform is the catalog source of truth. Edit products, prices, images, options, and categories in the form's **Available on-hand products** Product List. Then open **Admin → Products → Sync from Jotform**, or run:
+
+```bash
+php spark catalog:sync
+```
+
+The sync reads the published form and upserts its categories and products into MySQL. Existing website product IDs are preserved. Products or categories removed from Jotform are made inactive on the website instead of being deleted, so historical order data remains valid.
+
+Public catalog pages automatically check for changes every 15 minutes and keep serving the last successful database copy if Jotform is unavailable. Use the admin sync button when a Jotform edit needs to appear immediately. The interval can be changed with `JOTFORM_CATALOG_SYNC_TTL` in `.env`.
+
+Jotform currently does not provide API endpoints for managing or exporting Product List entries. For that reason, editing catalog data on the website is intentionally disabled; maintaining two independently editable catalogs would allow them to drift apart.
+
 ## 2. Configure credentials
 
 Generate an API key in Jotform under **My Account → API**, then add these values to `backend/.env`:

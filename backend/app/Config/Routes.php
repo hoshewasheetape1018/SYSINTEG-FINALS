@@ -126,6 +126,7 @@ $routes->get('admin/orders/(:num)/proof', 'AdminOrders::proof/$1');
 
 // Products
 $routes->get('admin/products', 'AdminProducts::index');
+$routes->post('admin/products/sync', 'AdminProducts::sync');
 $routes->get('admin/products/create', 'AdminProducts::create');
 $routes->post('admin/products/create', 'AdminProducts::store');
 $routes->get('admin/products/edit/(:num)', 'AdminProducts::edit/$1');

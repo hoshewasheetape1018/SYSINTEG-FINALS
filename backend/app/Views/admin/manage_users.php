@@ -1,73 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<?= view('components/head') ?>
-
-<body>
-
-    <!-- header -->
-    <?= view('components/header') ?>
-
-    <!-- main content -->
-    <section id="signup">
-        <div class="container">
-
-            <h2 class="title">Manage Users</h2>
-
-            <div class="table-container">
-                <table class="admin-table">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Username</th>
-                            <th>Display Name</th>
-                            <th>Email</th>
-                            <th>Coins</th>
-                            <th>Type</th>
-                            <th>Email Activated</th>
-                            <th>Status</th>
-                            <th>Created</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($users as $userEntity): ?>
-                        <tr>
-                            <td><?= $userEntity->id ?></td>
-                            <td><?= esc($userEntity->username) ?></td>
-                            <td><?= esc($userEntity->display_name ?? '-') ?></td>
-                            <td><?= esc($userEntity->email) ?></td>
-                            <td><?= $userEntity->coins ?></td>
-                            <td><?= esc(ucfirst($userEntity->type)) ?></td>
-                            <td>
-                                <?php if ($userEntity->email_activated): ?>
-                                    <span class="badge active">Yes</span>
-                                <?php else: ?>
-                                    <span class="badge inactive">No</span>
-                                <?php endif; ?>
-                            </td>
-                            <td>
-                                <?php if ($userEntity->account_status == 1): ?>
-                                    <span class="badge active">Active</span>
-                                <?php else: ?>
-                                    <span class="badge inactive">Inactive</span>
-                                <?php endif; ?>
-                            </td>
-                            <td><?= $userEntity->created_at ?></td>
-                            <td>
-                                <a href="<?= site_url('admin/users/edit/' . $userEntity->id) ?>" class="btn btn-edit">Edit</a>
-                            </td>
-                        </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-            </div>
-
-        </div>
-    </section>
-
-</body>
-
-<!-- footer -->
-<?= view('components/footer') ?>
-
-</html>
+<?= view('components/admin_page_start', ['pageTitle' => 'Customer Management']) ?>
+<div class="admin-topbar"><div class="admin-search"><i class="fa-solid fa-magnifying-glass"></i><input class="form-control" type="search" placeholder="Search customers" data-admin-search="#usersTable"></div></div>
+<div class="admin-breadcrumb"><a href="/admin/dashboard"><i class="fa-solid fa-house"></i></a><span class="slash">/</span><span>Customer Management</span></div>
+<div><h1 class="admin-page-title">Customer Management</h1><p class="admin-page-subtitle">Review customer accounts, access, and activation status.</p></div>
+<?php $activeCount=0;$adminCount=0;foreach($users as $item){if($item->account_status)$activeCount++;if($item->type==='admin')$adminCount++;} ?>
+<div class="admin-stat-band" style="--stat-count:3"><div class="admin-stat"><span class="admin-stat-label">Total Accounts</span><span class="admin-stat-value"><?= count($users) ?></span></div><div class="admin-stat"><span class="admin-stat-label">Active Accounts</span><span class="admin-stat-value"><?= $activeCount ?></span></div><div class="admin-stat"><span class="admin-stat-label">Administrators</span><span class="admin-stat-value"><?= $adminCount ?></span></div></div>
+<?php if (session()->getFlashdata('success')): ?><div class="alert alert-success"><?= esc(session()->getFlashdata('success')) ?></div><?php endif; ?><?php if (session()->getFlashdata('error')): ?><div class="alert alert-danger"><?= esc(session()->getFlashdata('error')) ?></div><?php endif; ?>
+<div class="admin-tools"><div class="admin-search"><i class="fa-solid fa-magnifying-glass"></i><input class="form-control" type="search" placeholder="Filter customer list" data-admin-search="#usersTable"></div></div>
+<div class="admin-table-shell table-responsive"><table class="table align-middle" id="usersTable"><thead><tr><th>Customer</th><th>Email</th><th>Role</th><th>Coins</th><th>Email</th><th>Status</th><th>Created</th><th></th></tr></thead><tbody><?php foreach($users as $userEntity): ?><tr data-admin-row><td><strong><i class="fa-solid fa-circle-user me-2"></i><?= esc($userEntity->display_name ?: $userEntity->username) ?></strong><small class="d-block">@<?= esc($userEntity->username) ?></small></td><td><?= esc($userEntity->email) ?></td><td><?= esc(ucfirst($userEntity->type)) ?></td><td><span class="admin-price"><?= esc($userEntity->coins) ?></span></td><td><span class="admin-status <?= $userEntity->email_activated?'admin-status-success':'admin-status-warning' ?>"><?= $userEntity->email_activated?'Verified':'Pending' ?></span></td><td><span class="admin-status <?= $userEntity->account_status?'admin-status-success':'admin-status-neutral' ?>"><?= $userEntity->account_status?'Active':'Inactive' ?></span></td><td><?= esc(date('M j, Y',strtotime($userEntity->created_at))) ?></td><td class="text-end"><a class="admin-action-link" href="<?= site_url('admin/users/edit/'.$userEntity->id) ?>" aria-label="Edit customer"><i class="fa-solid fa-pen"></i></a></td></tr><?php endforeach; ?></tbody></table></div>
+<?= view('components/admin_page_end') ?>

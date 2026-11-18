@@ -47,6 +47,8 @@
 # Use https://eu-api.jotform.com for EU accounts or
 # https://hipaa-api.jotform.com for HIPAA accounts.
 # JOTFORM_API_URL = https://api.jotform.com
+# Refresh the public website catalog from the published form every 15 minutes.
+# JOTFORM_CATALOG_SYNC_TTL = 900
 # Optional explicit logical-field-to-question-ID mapping (JSON):
 # The included Blumies form (263211686457058) is mapped automatically.
 # JOTFORM_FIELD_MAP = '{"customer_name":"3","email":"4","phone":"5","street_address":"6","city":"7","region":"8","postal_code":"9","payment_reference":"15","comments":"21","delivery_method":"28"}'

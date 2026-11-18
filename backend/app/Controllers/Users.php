@@ -1,8 +1,11 @@
 <?php
 namespace App\Controllers;
+
+use App\Libraries\ProductCatalog;
+
 class Users extends BaseController
 {
-    public function index() { return view('user/landing_page', ['pageTitle' => 'Blumies — Small joys, thoughtfully made']); }
+    public function index() { return view('user/landing_page', ['pageTitle' => 'Blumies — Small joys, thoughtfully made', 'featuredProducts' => array_slice((new ProductCatalog())->all(), 0, 3)]); }
     public function about() { return view('pages/content', ['pageTitle' => 'About Blumies', 'eyebrow' => 'Our story', 'title' => 'Playful things for ordinary days', 'copy' => 'Blumies is a small, joy-led shop built around colorful keepsakes, wearable pieces, and gifts worth holding on to.']); }
     public function contact() { return view('pages/contact', ['pageTitle' => 'Contact Blumies']); }
     public function support() { return view('pages/content', ['pageTitle' => 'Support', 'eyebrow' => 'Need a hand?', 'title' => 'We’re here to help', 'copy' => 'Send us a message about an order, a product, or anything else and our team will get back to you.']); }

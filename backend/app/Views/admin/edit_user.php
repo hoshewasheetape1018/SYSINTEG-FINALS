@@ -1,97 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<?= view('components/head') ?>
-
-<body>
-    <?= view('components/header') ?>
-
-    <section id="edit-user">
-        <div class="container">
-            <h2>Edit User: <?= esc($user->username) ?></h2>
-
-            <form action="<?= site_url('admin/users/update/' . $user->id) ?>" method="post">
-
-                <div>
-                    <label>Username</label>
-                    <input type="text" name="username" value="<?= esc($user->username) ?>" required>
-                </div>
-
-                <div>
-                    <label>Display Name</label>
-                    <input type="text" name="display_name" value="<?= esc($user->display_name) ?>">
-                </div>
-
-                <div>
-                    <label>Email</label>
-                    <input type="email" name="email" value="<?= esc($user->email) ?>" required>
-                </div>
-
-                <div>
-                    <label>New Password (leave blank to keep current)</label>
-                    <input type="password" name="password" placeholder="New Password">
-                </div>
-
-                <div>
-                    <label>Coins</label>
-                    <input type="number" name="coins" value="<?= esc($user->coins) ?>" min="0">
-                </div>
-
-
-                <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-                    <div>
-                        <label>Type</label>
-                        <select name="type">
-                            <option value="client" <?= $user->type === 'client' ? 'selected' : '' ?>>Client</option>
-                            <option value="admin" <?= $user->type === 'admin' ? 'selected' : '' ?>>Admin</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label>Email Activated</label>
-                        <select name="email_activated">
-                            <option value="1" <?= $user->email_activated ? 'selected' : '' ?>>Yes</option>
-                            <option value="0" <?= !$user->email_activated ? 'selected' : '' ?>>No</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label>Account Status</label>
-                        <select name="account_status">
-                            <option value="1" <?= $user->account_status ? 'selected' : '' ?>>Active</option>
-                            <option value="0" <?= !$user->account_status ? 'selected' : '' ?>>Inactive</option>
-                        </select>
-                    </div>
-                </div>
-
-                      <div style="margin-top:20px; display:flex; gap:10px; flex-wrap:wrap; margin-bottom:20px;">
-            <?= view('components/buttons/action', [
-                'btntitle' => 'SAVE',
-                'btntype' => 'submit'
-            ]) ?>
-            </form>
-
-                <?= view('components/buttons/primary', [
-                    'btnlink' => '/login',
-                    'btntitle' => 'BACK'
-                ]) ?>
-
-
-                <!-- Delete User Button -->
-                <form action="<?= site_url('admin/users/delete/' . $user->id) ?>" method="post" onsubmit="return confirm('Are you sure you want to delete this user? This action cannot be undone!');">
-                    <?= view('components/buttons/secondary', [
-                        'btntitle' => 'DELETE',
-                        'btntype' => 'submit'
-                    ]) ?>
-                </form>
-            </div>
-
-        </div>
-
-        </div>
-  
-    </section>
-
-    <?= view('components/footer') ?>
-</body>
-
-</html>
+<?= view('components/admin_page_start', ['pageTitle' => 'Edit Customer']) ?>
+<div class="admin-topbar"><div class="admin-search"><i class="fa-solid fa-magnifying-glass"></i><input class="form-control" value="<?= esc($user->username) ?>" disabled></div></div>
+<div class="admin-breadcrumb"><a href="/admin/dashboard"><i class="fa-solid fa-house"></i></a><span class="slash">/</span><a class="border-0 d-inline text-decoration-none" style="width:auto;height:auto" href="/admin/users">Customers</a><span class="slash">/</span><span>Edit Account</span></div>
+<div class="admin-heading-row"><div><h1 class="admin-page-title">Edit <?= esc($user->display_name ?: $user->username) ?></h1><p class="admin-page-subtitle">Update this customer’s profile and access settings.</p></div></div>
+<form action="<?= site_url('admin/users/update/'.$user->id) ?>" method="post" class="admin-panel">
+    <div class="row g-4"><div class="col-md-6"><label class="form-label">Username</label><input class="form-control" name="username" value="<?= esc($user->username) ?>" required></div><div class="col-md-6"><label class="form-label">Display Name</label><input class="form-control" name="display_name" value="<?= esc($user->display_name) ?>"></div><div class="col-md-8"><label class="form-label">Email</label><input class="form-control" type="email" name="email" value="<?= esc($user->email) ?>" required></div><div class="col-md-4"><label class="form-label">Coins</label><input class="form-control" type="number" name="coins" value="<?= esc($user->coins) ?>" min="0"></div><div class="col-12"><label class="form-label">New Password</label><input class="form-control" type="password" name="password" placeholder="Leave blank to keep the current password"></div><div class="col-md-4"><label class="form-label">Role</label><select class="form-select" name="type"><option value="client" <?= $user->type==='client'?'selected':'' ?>>Client</option><option value="admin" <?= $user->type==='admin'?'selected':'' ?>>Admin</option></select></div><div class="col-md-4"><label class="form-label">Email Activated</label><select class="form-select" name="email_activated"><option value="1" <?= $user->email_activated?'selected':'' ?>>Yes</option><option value="0" <?= !$user->email_activated?'selected':'' ?>>No</option></select></div><div class="col-md-4"><label class="form-label">Account Status</label><select class="form-select" name="account_status"><option value="1" <?= $user->account_status?'selected':'' ?>>Active</option><option value="0" <?= !$user->account_status?'selected':'' ?>>Inactive</option></select></div></div>
+    <div class="d-flex flex-wrap justify-content-end gap-3 mt-5 pt-4 border-top"><a class="btn btn-outline-brand" href="/admin/users">Cancel</a><button class="btn btn-brand" type="submit"><i class="fa-solid fa-floppy-disk me-2"></i>Save Changes</button></div>
+</form>
+<?php if ((int)$user->id !== (int)session()->get('user_id')): ?><form action="<?= site_url('admin/users/delete/'.$user->id) ?>" method="post" class="mt-3 text-end" onsubmit="return confirm('Delete this account? This cannot be undone.');"><button class="btn btn-link text-danger" type="submit"><i class="fa-solid fa-trash-can me-2"></i>Delete Customer</button></form><?php endif; ?>
+<?= view('components/admin_page_end') ?>
