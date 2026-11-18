@@ -61,22 +61,45 @@ class Profile extends BaseController
             return redirect()->to('/profile/settings')->with('error', 'User not found.');
         }
 
-        // Base fields user can change
+        $post = $this->request->getPost();
+        $validation = service('validation');
+        $validation->setRules([
+            'username' => 'required|regex_match[/^[A-Za-z0-9_]{3,30}$/]|is_unique[users.username,id,' . (int) $userId . ']',
+            'display_name' => 'required|min_length[2]|max_length[100]',
+            'email' => 'required|max_length[255]|valid_email|is_unique[users.email,id,' . (int) $userId . ']',
+            'phone' => 'required|regex_match[/^09[0-9]{9}$/]|is_unique[users.phone,id,' . (int) $userId . ']',
+            'password' => 'permit_empty|min_length[8]|max_length[72]',
+        ], [
+            'username' => ['regex_match' => 'Use 3–30 letters, numbers, or underscores.'],
+            'phone' => ['regex_match' => 'Enter an 11-digit Philippine mobile number starting with 09.'],
+        ]);
+
+        if (!$validation->run($post)) {
+            session()->setFlashdata('profile_errors', $validation->getErrors());
+            session()->setFlashdata('profile_old', $post);
+            return redirect()->to('/profile/settings');
+        }
+
         $data = [
-            'username'     => $this->request->getPost('username'),
-            'display_name' => $this->request->getPost('display_name'),
-            'email'        => $this->request->getPost('email'),
-            'avatar'       => $this->request->getPost('avatar'),
+            'username'     => trim((string) $post['username']),
+            'display_name' => trim((string) $post['display_name']),
+            'email'        => strtolower(trim((string) $post['email'])),
+            'phone'        => trim((string) $post['phone']),
         ];
 
         // Password change (optional)
-        $newPassword = $this->request->getPost('password');
+        $newPassword = $post['password'] ?? '';
 
         if (!empty($newPassword)) {
             $data['password_hash'] = password_hash($newPassword, PASSWORD_DEFAULT);
         }
 
-        $UsersModel->update($userId, $data);
+        $UsersModel->skipValidation(true)->update($userId, $data);
+        session()->set([
+            'username' => $data['username'],
+            'display_name' => $data['display_name'],
+            'email' => $data['email'],
+        ]);
 
         return redirect()->to('/profile/settings')->with('message', 'Profile updated successfully!');
     }

@@ -1,9 +1,6 @@
 <?php $path = trim(uri_string(), '/'); ?>
 <aside class="col-lg-auto admin-sidebar">
-    <div class="admin-brand-panel">
-        <a class="brand-wordmark text-decoration-none" href="/admin/dashboard" aria-label="Blumies admin home">Blumies</a>
-        <button class="admin-menu-toggle d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#adminMenu" aria-label="Toggle admin menu"><i class="fa-solid fa-bars"></i></button>
-    </div>
+    <button class="admin-menu-toggle d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#adminMenu" aria-label="Toggle admin menu"><i class="fa-solid fa-bars"></i></button>
     <div class="admin-profile-panel">
         <span class="admin-avatar"><i class="fa-solid fa-user"></i></span>
         <span><strong><?= esc(session()->get('display_name') ?: session()->get('username') ?: 'Admin') ?></strong><small><?= esc(session()->get('email') ?: 'Administrator') ?></small></span>

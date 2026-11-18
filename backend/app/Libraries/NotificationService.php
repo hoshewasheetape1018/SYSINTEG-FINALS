@@ -16,6 +16,11 @@ class NotificationService
 
     public function orderStatus(array $order, string $status): void
     {
+        if (!db_connect()->tableExists('notifications')) {
+            log_message('warning', 'Notification skipped because the notifications table has not been migrated yet.');
+            return;
+        }
+
         if (!isset(self::STATUS_MESSAGES[$status])) {
             return;
         }

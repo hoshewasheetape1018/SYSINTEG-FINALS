@@ -14,9 +14,8 @@ h1,h2,h3,h4{color:var(--navy);font-weight:700}.display-title{font-size:clamp(2.6
 
 /* Admin workspace — based on the Blumies dashboard design reference. */
 .admin-body{--admin-blush:#eca2a7;--admin-cream:#fff8ef;--admin-hot-pink:#e94078;--admin-navy:#29305d;--admin-blue:#6687dc;--admin-green:#2da252;--admin-peach:#f3b58f;background:var(--admin-cream);color:var(--admin-navy)}
-.admin-shell{min-height:100vh;background:var(--admin-cream)}
-.admin-body .admin-sidebar{width:clamp(260px,19vw,370px);min-height:100vh;padding:0;color:#fff;background:var(--admin-blush)}
-.admin-brand-panel{min-height:165px;display:flex;align-items:center;justify-content:center;padding:1.5rem;background:rgba(232,63,120,.08);position:relative}
+.admin-shell{min-height:calc(100vh - 76px);background:var(--admin-cream)}
+.admin-body .admin-sidebar{position:relative;width:clamp(260px,19vw,370px);min-height:calc(100vh - 76px);padding:0;color:#fff;background:var(--admin-blush)}
 .admin-brand{color:#fff;font-family:Genty,'Oleo Script Swash Caps',cursive;font-size:clamp(3rem,5vw,5.2rem);line-height:.85;text-decoration:none;-webkit-text-stroke:7px var(--admin-hot-pink);paint-order:stroke fill;filter:drop-shadow(0 3px 0 rgba(255,255,255,.6))}
 .admin-profile-panel{min-height:145px;display:flex;align-items:center;justify-content:center;gap:1rem;padding:1.5rem;color:var(--admin-blue);background:#fff8e8}
 .admin-profile-panel strong,.admin-profile-panel small{display:block;line-height:1.15}.admin-profile-panel strong{font-size:1.05rem}.admin-profile-panel small{max-width:135px;overflow:hidden;text-overflow:ellipsis;font-size:.7rem}
@@ -35,5 +34,5 @@ h1,h2,h3,h4{color:var(--navy);font-weight:700}.display-title{font-size:clamp(2.6
 .admin-detail-grid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(270px,.6fr);gap:2rem}.admin-panel{padding:1.25rem 0;border-top:1px solid rgba(233,64,120,.22)}.admin-panel h2{color:var(--admin-hot-pink);font-size:1rem}.admin-body .form-control,.admin-body .form-select{border:1.5px solid rgba(233,64,120,.35);background:rgba(255,255,255,.25)}.admin-body .form-label{color:var(--admin-hot-pink)}
 .admin-empty{padding:3rem;text-align:center;color:#907f99}.admin-note{padding:1rem 1.15rem;border-left:4px solid var(--admin-hot-pink);background:rgba(236,162,167,.12);color:#76546b;font-size:.82rem}
 @media(max-width:1199.98px){.admin-detail-grid{grid-template-columns:1fr}.admin-stat-band{--stat-count:2;grid-template-columns:repeat(2,1fr)}.admin-stat:nth-child(2):after{display:none}}
-@media(max-width:991.98px){.admin-body .admin-sidebar{width:100%;min-height:auto}.admin-brand-panel{min-height:100px}.admin-brand{font-size:3.3rem}.admin-profile-panel{min-height:auto;justify-content:flex-start;padding:1rem 1.25rem}.admin-menu{padding:1rem 1.25rem 1.5rem}.admin-submenu{padding-left:.75rem}.admin-body .admin-content{padding:1.5rem 1rem 3rem}.admin-topbar{margin-bottom:2rem}}
+@media(max-width:991.98px){.admin-body .admin-sidebar{width:100%;min-height:auto}.admin-brand{font-size:3.3rem}.admin-profile-panel{min-height:auto;justify-content:flex-start;padding:1rem 4.5rem 1rem 1.25rem}.admin-menu{padding:1rem 1.25rem 1.5rem}.admin-submenu{padding-left:.75rem}.admin-body .admin-content{padding:1.5rem 1rem 3rem}.admin-topbar{margin-bottom:2rem}}
 @media(max-width:575.98px){.admin-stat-band{grid-template-columns:1fr 1fr}.admin-stat{padding-inline:.35rem}.admin-stat-value{font-size:2rem}.admin-stat-label{font-size:.7rem}.admin-tools,.admin-heading-row{align-items:stretch}.admin-tool-actions{display:grid;width:100%}.admin-tool-actions .btn{width:100%}.admin-search{width:100%}.admin-breadcrumb{font-size:.85rem}.admin-body .table>:not(caption)>*>*{padding:.75rem .55rem}}

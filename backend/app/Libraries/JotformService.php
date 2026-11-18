@@ -125,6 +125,7 @@ class JotformService
         $jotformComments = [
             'Website order #' . $order['id'],
             'Username: ' . $user['username'],
+            'GCash sender: ' . trim((string) ($order['gcash_name'] ?? '')) . ' (' . trim((string) ($order['gcash_number'] ?? '')) . ')',
             '',
             'Products:',
             implode("\n", $productLines),
@@ -153,6 +154,8 @@ class JotformService
             'delivery_method' => (string) $order['delivery_method'],
             'products' => implode("\n", $productLines),
             'total' => 'PHP ' . number_format((float) $order['total'], 2, '.', ''),
+            'gcash_name' => (string) ($order['gcash_name'] ?? ''),
+            'gcash_number' => (string) ($order['gcash_number'] ?? ''),
             'payment_reference' => (string) ($order['payment_reference'] ?? ''),
             'comments' => implode("\n", $jotformComments),
         ];
@@ -225,6 +228,8 @@ class JotformService
             'delivery_method' => ['delivery method', 'shipping method'],
             'products' => ['products', 'order items', 'items'],
             'total' => ['total', 'order total', 'total amount'],
+            'gcash_name' => ['gcash account name', 'gcash name', 'account name'],
+            'gcash_number' => ['gcash mobile number', 'gcash number'],
             'payment_reference' => ['payment reference number', 'payment reference', 'reference number'],
             'comments' => ['comments or suggestions', 'comments', 'notes'],
         ];

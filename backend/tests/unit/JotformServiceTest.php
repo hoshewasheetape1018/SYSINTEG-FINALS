@@ -20,6 +20,8 @@ class JotformServiceTest extends CIUnitTestCase
                 'postal_code' => '1000',
                 'delivery_method' => 'Standard delivery',
                 'phone' => '09171234567',
+                'gcash_name' => 'Test Customer',
+                'gcash_number' => '09171234567',
                 'payment_reference' => 'GCASH-123',
                 'comments' => 'Please pack carefully.',
                 'total' => 700,
@@ -41,7 +43,10 @@ class JotformServiceTest extends CIUnitTestCase
         $this->assertStringContainsString('2 × Pocket Bloom (Pink)', $values['products']);
         $this->assertSame('PHP 700.00', $values['total']);
         $this->assertSame('09171234567', $values['phone']);
+        $this->assertSame('Test Customer', $values['gcash_name']);
+        $this->assertSame('09171234567', $values['gcash_number']);
         $this->assertSame('GCASH-123', $values['payment_reference']);
+        $this->assertStringContainsString('GCash sender: Test Customer (09171234567)', $values['comments']);
         $this->assertStringContainsString('Website order #42', $values['comments']);
         $this->assertStringContainsString('Please pack carefully.', $values['comments']);
     }
@@ -89,6 +94,7 @@ class JotformServiceTest extends CIUnitTestCase
                 'id' => 42, 'phone' => '09171234567', 'address' => '1 Bloom Street',
                 'city' => 'Manila', 'region' => 'NCR', 'postal_code' => '1000',
                 'delivery_method' => 'Grab (Contact us)', 'payment_reference' => 'GCASH-123',
+                'gcash_name' => 'Test Customer', 'gcash_number' => '09171234567',
                 'comments' => 'Leave at reception.', 'total' => 129,
             ],
             ['display_name' => 'Test Customer', 'username' => 'tester', 'email' => 'tester@example.test'],

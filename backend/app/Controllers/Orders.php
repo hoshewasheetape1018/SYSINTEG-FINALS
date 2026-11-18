@@ -43,12 +43,14 @@ class Orders extends BaseController
         if ($this->checkoutItems() === []) return redirect()->to('/cart')->with('error', 'Your cart is empty.');
         $validation = service('validation');
         $validation->setRules([
-            'phone' => 'required|max_length[50]',
+            'phone' => 'required|regex_match[/^09[0-9]{9}$/]',
             'address' => 'required|max_length[255]',
             'city' => 'required|max_length[100]',
             'region' => 'required|max_length[100]',
             'postal_code' => 'required|max_length[20]',
             'delivery_method' => 'required|in_list[J&T (Metro Manila/Luzon) 1-3 items (₱85),J&T (Metro Manila/Luzon) 4 or more items (₱95),Lalamove (Contact us),Grab (Contact us)]',
+            'gcash_name' => 'required|min_length[2]|max_length[100]',
+            'gcash_number' => 'required|regex_match[/^09[0-9]{9}$/]',
             'payment_reference' => 'required|max_length[100]',
             'comments' => 'permit_empty|max_length[2000]',
         ]);
@@ -85,6 +87,8 @@ class Orders extends BaseController
             'region' => trim((string) $post['region']),
             'postal_code' => trim((string) $post['postal_code']),
             'delivery_method' => $post['delivery_method'],
+            'gcash_name' => trim((string) $post['gcash_name']),
+            'gcash_number' => trim((string) $post['gcash_number']),
             'payment_reference' => trim((string) $post['payment_reference']),
             'proof_of_payment' => $proofName,
             'comments' => trim((string) ($post['comments'] ?? '')) ?: null,

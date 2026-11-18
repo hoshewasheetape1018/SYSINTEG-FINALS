@@ -17,6 +17,7 @@ class UsersModel extends Model
         'username',
         'display_name',
         'email',
+        'phone',
         'password_hash',
         'coins',
         'type',
@@ -42,6 +43,7 @@ class UsersModel extends Model
     protected $validationRules      = [
         'username' => 'required|min_length[3]|max_length[100]|is_unique[users.username]',
         'email'    => 'required|valid_email|is_unique[users.email]',
+        'phone'    => 'permit_empty|regex_match[/^09[0-9]{9}$/]|is_unique[users.phone]',
         'password_hash' => 'required|min_length[8]',
     ];
     protected $validationMessages   = [];

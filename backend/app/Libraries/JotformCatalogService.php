@@ -139,6 +139,9 @@ class JotformCatalogService
             $priceNode = $xpath->query('.//*[@id="input_10_' . $jotformId . '_price"]', $node)?->item(0);
             $descriptionNode = $xpath->query('.//*[' . $class('form-product-description') . ']', $node)?->item(0);
             $imageNode = $xpath->query('.//img[contains(@alt, "Product Image")]', $node)?->item(0);
+            if (!$imageNode instanceof DOMElement) {
+                $imageNode = $xpath->query('.//img[@src]', $node)?->item(0);
+            }
             $categoryKeys = preg_split('/[\s,]+/', trim($node->getAttribute('categories'))) ?: [];
             $variants = [];
             $variantNodes = $xpath->query('.//select[contains(@id, "_custom_")]/option', $node);

@@ -10,12 +10,13 @@ class Notifications extends BaseController
         $userId = $this->userId();
         if (!$userId) return redirect()->to('/login');
 
+        $notifications = db_connect()->tableExists('notifications')
+            ? (new NotificationModel())->where('user_id', $userId)->orderBy('id', 'DESC')->findAll()
+            : [];
+
         return view('user/notifications', [
             'pageTitle' => 'Notifications',
-            'notifications' => (new NotificationModel())
-                ->where('user_id', $userId)
-                ->orderBy('id', 'DESC')
-                ->findAll(),
+            'notifications' => $notifications,
         ]);
     }
 
@@ -23,6 +24,7 @@ class Notifications extends BaseController
     {
         $userId = $this->userId();
         if (!$userId) return redirect()->to('/login');
+        if (!db_connect()->tableExists('notifications')) return redirect()->to('/notifications');
 
         $model = new NotificationModel();
         $notification = $model->where('id', (int) $id)->where('user_id', $userId)->first();
@@ -38,6 +40,7 @@ class Notifications extends BaseController
     {
         $userId = $this->userId();
         if (!$userId) return redirect()->to('/login');
+        if (!db_connect()->tableExists('notifications')) return redirect()->to('/notifications');
 
         (new NotificationModel())
             ->where('user_id', $userId)

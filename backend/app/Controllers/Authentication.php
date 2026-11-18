@@ -67,7 +67,9 @@ class Authentication extends BaseController
             'isLoggedIn'   => true,
         ]);
 
-        return redirect()->to('/');
+        return strtolower((string) ($userArr['type'] ?? 'client')) === 'admin'
+            ? redirect()->to('/admin/dashboard')
+            : redirect()->to('/');
     }
 
     public function logout()
@@ -92,11 +94,18 @@ class Authentication extends BaseController
         $validation = \Config\Services::validation();
 
         $validation->setRules([
-            'username' => 'required|min_length[3]|max_length[100]|is_unique[users.username]',
-            'display_name' => 'required|min_length[3]|max_length[100]',
-            'email' => 'required|valid_email|is_unique[users.email]',
-            'password' => 'required|min_length[8]',
+            'username' => 'required|regex_match[/^[A-Za-z0-9_]{3,30}$/]|is_unique[users.username]',
+            'display_name' => 'required|min_length[2]|max_length[100]',
+            'email' => 'required|max_length[255]|valid_email|is_unique[users.email]',
+            'phone' => 'required|regex_match[/^09[0-9]{9}$/]|is_unique[users.phone]',
+            'password' => 'required|min_length[8]|max_length[72]',
             'confirm_password' => 'required|matches[password]',
+        ], [
+            'username' => ['regex_match' => 'Use 3–30 letters, numbers, or underscores.'],
+            'phone' => [
+                'regex_match' => 'Enter an 11-digit Philippine mobile number starting with 09.',
+                'is_unique' => 'That phone number is already connected to an account.',
+            ],
         ]);
 
         if (!$validation->run($post)) {
@@ -107,9 +116,10 @@ class Authentication extends BaseController
 
         $userModel = new UsersModel();
         $data = [
-            'username'        => $post['username'],
-            'display_name'    => $post['display_name'],
-            'email'           => $post['email'],
+            'username'        => trim((string) $post['username']),
+            'display_name'    => trim((string) $post['display_name']),
+            'email'           => strtolower(trim((string) $post['email'])),
+            'phone'           => trim((string) $post['phone']),
             'password_hash'   => password_hash($post['password'], PASSWORD_DEFAULT),
             'coins'           => 0,
             'type'            => 'client',

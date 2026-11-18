@@ -21,6 +21,7 @@ class JotformCatalogServiceTest extends CIUnitTestCase
           </span>
           <span class="form-product-category-item" category="2003"><strong>Imperfect Prints (Minor print differences.)</strong></span>
           <span class="form-product-item" categories="2003" pid="1010">
+            <img src="https://example.test/white.jpg">
             <span class="form-product-name">White</span>
             <span id="input_10_1010_price">80</span>
             <select id="input_10_custom_1010_1"><option>Stitched</option><option>Rivet</option></select>
@@ -38,6 +39,7 @@ class JotformCatalogServiceTest extends CIUnitTestCase
         $this->assertSame('1000', $catalog['products'][0]['jotform_product_id']);
         $this->assertSame(129.0, $catalog['products'][0]['price']);
         $this->assertSame('https://example.test/spring.jpg', $catalog['products'][0]['image_url']);
+        $this->assertSame('https://example.test/white.jpg', $catalog['products'][1]['image_url']);
         $this->assertSame(['Stitched', 'Rivet'], $catalog['products'][1]['variants']);
     }
 }
