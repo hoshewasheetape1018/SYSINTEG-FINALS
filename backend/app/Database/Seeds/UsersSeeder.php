@@ -12,6 +12,8 @@ class UsersSeeder extends Seeder
 
         // Local development credentials. Never use this password in production.
         $adminPassword = password_hash('123', PASSWORD_DEFAULT);
+        $userPassword = password_hash('user123', PASSWORD_DEFAULT);
+
         $userData = [
             [
                 'username'        => 'admin',
@@ -23,6 +25,19 @@ class UsersSeeder extends Seeder
                 'account_status'  => 1,
                 'email_activated' => 1,
                 'profile_image'   => 'uploads/default_admin.png',
+                'created_at'      => $now,
+                'updated_at'      => $now,
+            ],
+            [
+                'username'        => 'testuser',
+                'display_name'    => 'Test User',
+                'email'           => 'user@blumies.test',
+                'password_hash'   => $userPassword,
+                'coins'           => 100,
+                'type'            => 'client',
+                'account_status'  => 1,
+                'email_activated' => 1,
+                'profile_image'   => 'uploads/default_user.png',
                 'created_at'      => $now,
                 'updated_at'      => $now,
             ]

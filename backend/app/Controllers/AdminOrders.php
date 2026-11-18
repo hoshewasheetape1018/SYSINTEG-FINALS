@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Libraries\NotificationService;
 use App\Models\OrderItemModel;
 use App\Models\OrderModel;
 use App\Models\UsersModel;
@@ -60,7 +61,17 @@ class AdminOrders extends BaseController
             return redirect()->back()->with('error', 'Invalid order status.');
         }
 
-        (new OrderModel())->update((int) $id, ['status' => $status]);
+        $orders = new OrderModel();
+        $order = $orders->find((int) $id);
+        if (!$order) {
+            return redirect()->to('/admin/orders')->with('error', 'Order not found.');
+        }
+
+        if ($order['status'] !== $status) {
+            $orders->update((int) $id, ['status' => $status]);
+            (new NotificationService())->orderStatus($order, $status);
+        }
+
         return redirect()->to('/admin/orders/' . $id)->with('success', 'Order status updated.');
     }
 

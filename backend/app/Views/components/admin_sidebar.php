@@ -1,7 +1,7 @@
 <?php $path = trim(uri_string(), '/'); ?>
 <aside class="col-lg-auto admin-sidebar">
     <div class="admin-brand-panel">
-        <a class="admin-brand" href="/admin/dashboard">BluMies</a>
+        <a class="brand-wordmark text-decoration-none" href="/admin/dashboard" aria-label="Blumies admin home">Blumies</a>
         <button class="admin-menu-toggle d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#adminMenu" aria-label="Toggle admin menu"><i class="fa-solid fa-bars"></i></button>
     </div>
     <div class="admin-profile-panel">

@@ -67,10 +67,7 @@ class Authentication extends BaseController
             'isLoggedIn'   => true,
         ]);
 
-        // Redirect based on role
-        return strtolower($userArr['type'] ?? 'client') === 'admin'
-            ? redirect()->to('/admin/dashboard')
-            : redirect()->to('/');
+        return redirect()->to('/');
     }
 
     public function logout()

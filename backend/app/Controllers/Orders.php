@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Libraries\JotformService;
+use App\Libraries\NotificationService;
 use App\Libraries\ProductCatalog;
 use App\Models\OrderItemModel;
 use App\Models\OrderModel;
@@ -105,6 +106,11 @@ class Orders extends BaseController
             @unlink($uploadDirectory . DIRECTORY_SEPARATOR . $proofName);
             return redirect()->to('/checkout')->with('error', 'We could not save your order. Please try again.');
         }
+
+        (new NotificationService())->orderStatus([
+            'id' => (int) $orderId,
+            'user_id' => $userId,
+        ], 'received');
 
         try {
             (new JotformService())->syncOrderById((int) $orderId);

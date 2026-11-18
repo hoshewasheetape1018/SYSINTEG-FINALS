@@ -13,6 +13,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
 
+      - name: Set up PHP 8.3
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: intl, mbstring, mysqli
+          tools: composer:v2
+          coverage: none
+
       - name: Install Composer dependencies
         working-directory: ./backend
         run: composer install --no-dev --prefer-dist --no-interaction --optimize-autoloader
@@ -33,4 +41,3 @@ jobs:
             **/node_modules/**
             **/.env
             **/writable/if0_43188418_blumiesdb
-            
