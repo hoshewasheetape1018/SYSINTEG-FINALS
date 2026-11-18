@@ -45,9 +45,6 @@ class JotformCatalogService
         $categoryIds = [];
 
         $database->transStart();
-        $database->table('catalog_categories')->update(['active' => 0]);
-        $database->table('catalog_products')->update(['active' => 0]);
-
         foreach ($catalog['categories'] as $category) {
             $existing = $categories->where('jotform_category_id', $category['jotform_category_id'])->first();
             $data = $category + ['active' => 1, 'synced_at' => $syncedAt];
@@ -58,6 +55,9 @@ class JotformCatalogService
                 $categoryIds[$category['jotform_category_id']] = (int) $categories->insert($data, true);
             }
         }
+
+        $jotformProductIds = array_column($catalog['products'], 'jotform_product_id');
+        $jotformCategoryIds = array_column($catalog['categories'], 'jotform_category_id');
 
         foreach ($catalog['products'] as $product) {
             $categoryKey = $product['jotform_category_id'];
@@ -73,6 +73,15 @@ class JotformCatalogService
                 $products->insert($product);
             }
         }
+
+        // The published Jotform Product List is the catalog's only source of
+        // truth. Remove stale rows instead of keeping non-form items hidden.
+        $database->table('catalog_products')
+            ->whereNotIn('jotform_product_id', $jotformProductIds)
+            ->delete();
+        $database->table('catalog_categories')
+            ->whereNotIn('jotform_category_id', $jotformCategoryIds)
+            ->delete();
 
         $database->transComplete();
         if (!$database->transStatus()) {

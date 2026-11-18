@@ -37,8 +37,7 @@ $username = $session->get('display_name') ?: $session->get('username') ?: 'Accou
                         <form id="logout-form" action="/logout" method="post" class="d-none"></form>
                     <?php else: ?>
                         <a href="/cart" class="nav-icon" aria-label="Shopping cart"><i class="fa-solid fa-bag-shopping"></i></a>
-                        <a href="/login" class="nav-icon" aria-label="Log in"><i class="fa-regular fa-circle-user"></i></a>
-                        <a href="/signup" class="btn btn-brand btn-sm">Sign up</a>
+                        <a href="/login" class="btn btn-brand btn-sm">Log in</a>
                     <?php endif; ?>
                 </div>
             </div>
