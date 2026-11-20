@@ -232,7 +232,7 @@ AD-ProjectName/
 | GitHub Copilot          | In-IDE code suggestions and boilerplate generation.                   | [https://github.com/features/copilot](https://github.com/features/copilot) |
 | YouTube “UI/UX Design”  | Video tutorials on modern web interface layouts and patterns.         | [https://www.youtube.com](https://www.youtube.com)                         |
 | Pinterest Design Boards | Inspiration for color schemes, typography, and component layouts.     | [https://www.pinterest.com](https://www.pinterest.com)                     |
-| Figma | Inspiration for color schemes, typography, and component layouts.     | [https://www.figma.com](https://www.figma.com/design/udZTjWOdxv4LugdjBaVsZZ/Labubu-Project?node-id=114-34&m=dev&t=MkNDjzX5ud4TUnvb-1)                     |
+| Figma | Inspiration for color schemes, typography, and component layouts.     | [https://www.figma.com](https://www.figma.com/design/UqJAU5883W84MCB8s1Tq53/blumiesp2?node-id=0-1&t=9qroAKXM3u6lAMFO-1)                     |
 | File Garden | For image and other types of media hosting | [https://filegarden.com](https://filegarden.com/users/66b20f8021a7f6400373cf73/garden/#aM7j9a-Raxbh-Ych) 
 | System Documentation    | Internal docs | — (see `/docs` folder in repo)                                             |
 
