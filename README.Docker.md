@@ -1,9 +1,17 @@
 ### Building and running your application
 
 When you're ready, start your application by running:
-`docker compose up --build`.
+`docker compose up -d --build`.
 
-Your application will be available at http://localhost:9001.
+Initialize it on first use:
+
+```cmd
+docker compose exec -T php php spark migrate
+docker compose exec -T php php spark db:seed UsersSeeder
+docker compose exec -T php php spark catalog:sync
+```
+
+Your application will be available at http://localhost:8090.
 
 ### PHP extensions
 If your application requires specific PHP extensions to run, they will need to be added to the Dockerfile. Follow the instructions and example in the Dockerfile to add them.

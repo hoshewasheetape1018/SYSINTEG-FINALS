@@ -51,6 +51,8 @@ It helps teams quickly bootstrap backend + frontend projects, with simple sample
 
 ## Overview
 
+> **Panel/evaluator guide:** Use the complete [Working Integrated System Runbook](docs/integrated-system-documentation.md) for architecture, Jotform data flows, configuration, database setup, test accounts, exact build/run commands, demonstration steps, and troubleshooting.
+
 This project provides the base layout for **BlumieS**, a CodeIgniter 4 e-commerce website with conventions for organized file structure, component usage, and modular development.
 
 It is designed to be simple to set up and serve as a foundation for expanding new features as BlumieS grows.
