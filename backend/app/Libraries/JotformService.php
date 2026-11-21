@@ -48,6 +48,119 @@ class JotformService
     }
 
     /**
+     * Return every active submission ID currently present in the configured
+     * Jotform table. Results are paginated so a full table is compared rather
+     * than only Jotform's first page.
+     *
+     * @return list<string>
+     */
+    public function listSubmissionIds(): array
+    {
+        if (!$this->isConfigured()) {
+            throw new RuntimeException('Jotform API key or form ID is not configured.');
+        }
+
+        $ids = [];
+        $limit = 100;
+        $offset = 0;
+
+        for ($page = 0; $page < 100; $page++) {
+            $response = $this->http->get($this->endpoint('/form/' . rawurlencode($this->config->formId) . '/submissions'), [
+                'query' => [
+                    'apiKey' => $this->config->apiKey,
+                    'limit' => $limit,
+                    'offset' => $offset,
+                ],
+                'headers' => ['Accept' => 'application/json'],
+                'http_errors' => false,
+            ]);
+            $payload = json_decode((string) $response->getBody(), true);
+
+            if ($response->getStatusCode() >= 300 || !is_array($payload) || (int) ($payload['responseCode'] ?? 0) !== 200) {
+                throw new RuntimeException('Unable to read Jotform submissions. No website orders were deleted.');
+            }
+
+            $submissions = array_values(array_filter($payload['content'] ?? [], 'is_array'));
+            foreach ($submissions as $submission) {
+                // Jotform keeps table deletions in Trash and may still expose
+                // them through the API with a DELETED status for up to 30 days.
+                if (strtoupper(trim((string) ($submission['status'] ?? ''))) === 'DELETED') {
+                    continue;
+                }
+                $id = trim((string) ($submission['id'] ?? $submission['submissionID'] ?? $submission['submissionId'] ?? ''));
+                if ($id !== '') {
+                    $ids[$id] = true;
+                }
+            }
+
+            $received = count($submissions);
+            $total = (int) ($payload['resultSet']['count'] ?? 0);
+            $offset += $received;
+            if ($received < $limit || ($total > 0 && $offset >= $total)) {
+                break;
+            }
+        }
+
+        return array_keys($ids);
+    }
+
+    /**
+     * Delete local copies of orders that had synchronized successfully but
+     * whose Jotform submission has since been deleted. Unsynchronized orders
+     * are intentionally excluded so an API problem cannot erase local sales.
+     *
+     * @return array{remote_submissions:int,deleted_orders:int}
+     */
+    public function reconcileDeletedOrders(): array
+    {
+        $remoteIds = array_fill_keys($this->listSubmissionIds(), true);
+        $orders = new OrderModel();
+        $syncedOrders = $orders
+            ->where('jotform_status', 'synced')
+            ->where('jotform_submission_id !=', '')
+            ->where('jotform_submission_id IS NOT NULL', null, false)
+            ->findAll();
+
+        $deleted = [];
+        foreach ($syncedOrders as $order) {
+            $submissionId = (string) $order['jotform_submission_id'];
+            if (!isset($remoteIds[$submissionId])) {
+                $deleted[] = $order;
+            }
+        }
+
+        if ($deleted === []) {
+            return ['remote_submissions' => count($remoteIds), 'deleted_orders' => 0];
+        }
+
+        $database = db_connect();
+        $orderIds = array_map(static fn (array $order): int => (int) $order['id'], $deleted);
+        $database->transStart();
+        if ($database->tableExists('notifications')) {
+            $database->table('notifications')->whereIn('order_id', $orderIds)->delete();
+        }
+        $database->table('order_items')->whereIn('order_id', $orderIds)->delete();
+        $database->table('orders')->whereIn('id', $orderIds)->delete();
+        $database->transComplete();
+
+        if (!$database->transStatus()) {
+            throw new RuntimeException('Website orders could not be reconciled. No payment files were removed.');
+        }
+
+        foreach ($deleted as $order) {
+            $proofName = basename((string) ($order['proof_of_payment'] ?? ''));
+            if ($proofName !== '') {
+                $proofPath = WRITEPATH . 'uploads/payment-proofs/' . $proofName;
+                if (is_file($proofPath)) {
+                    @unlink($proofPath);
+                }
+            }
+        }
+
+        return ['remote_submissions' => count($remoteIds), 'deleted_orders' => count($deleted)];
+    }
+
+    /**
      * Synchronize an order once. A previously synchronized order is returned
      * without creating a duplicate Jotform submission.
      *

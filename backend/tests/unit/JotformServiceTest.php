@@ -117,6 +117,55 @@ class JotformServiceTest extends CIUnitTestCase
         $this->assertArrayNotHasKey('10', $submission);
         $this->assertArrayNotHasKey('14', $submission);
     }
+
+    public function testListsAllSubmissionIdsAcrossPages(): void
+    {
+        $config = new Jotform();
+        $config->apiKey = 'test-key';
+        $config->formId = '123456';
+        $config->apiUrl = 'https://api.jotform.test';
+        $http = new FakeJotformHttpClient();
+        $http->getResponses = [
+            new FakeJotformResponse(200, json_encode([
+                'responseCode' => 200,
+                'content' => array_map(static fn (int $id): array => ['id' => 'submission-' . $id], range(1, 100)),
+                'resultSet' => ['count' => 101],
+            ])),
+            new FakeJotformResponse(200, json_encode([
+                'responseCode' => 200,
+                'content' => [
+                    ['id' => 'submission-101', 'status' => 'ACTIVE'],
+                    ['id' => 'submission-102', 'status' => 'DELETED'],
+                ],
+                'resultSet' => ['count' => 102],
+            ])),
+        ];
+
+        $ids = (new JotformService($config, $http))->listSubmissionIds();
+
+        $this->assertCount(101, $ids);
+        $this->assertSame('submission-1', $ids[0]);
+        $this->assertSame('submission-101', $ids[100]);
+        $this->assertSame(2, $http->getCalls);
+        $this->assertSame(100, $http->getOptions[1]['query']['offset']);
+    }
+
+    public function testSubmissionListFailureCannotBeMistakenForAnEmptyTable(): void
+    {
+        $config = new Jotform();
+        $config->apiKey = 'test-key';
+        $config->formId = '123456';
+        $config->apiUrl = 'https://api.jotform.test';
+        $http = new FakeJotformHttpClient();
+        $http->getResponses = [new FakeJotformResponse(503, json_encode([
+            'responseCode' => 503,
+            'message' => 'Unavailable',
+        ]))];
+
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('No website orders were deleted');
+        (new JotformService($config, $http))->listSubmissionIds();
+    }
 }
 
 class FakeJotformHttpClient
@@ -124,9 +173,17 @@ class FakeJotformHttpClient
     public string $method = '';
     public string $url = '';
     public array $options = [];
+    public array $getResponses = [];
+    public array $getOptions = [];
+    public int $getCalls = 0;
 
     public function get(string $url, array $options): FakeJotformResponse
     {
+        $this->getOptions[] = $options;
+        if (isset($this->getResponses[$this->getCalls])) {
+            return $this->getResponses[$this->getCalls++];
+        }
+        $this->getCalls++;
         return new FakeJotformResponse(200, json_encode(['responseCode' => 200, 'content' => []]));
     }
 

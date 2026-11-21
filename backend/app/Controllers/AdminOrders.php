@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Libraries\JotformService;
 use App\Libraries\NotificationService;
 use App\Models\OrderItemModel;
 use App\Models\OrderModel;
@@ -50,6 +51,28 @@ class AdminOrders extends BaseController
             'user' => (new UsersModel())->find((int) $order['user_id']),
             'items' => (new OrderItemModel())->where('order_id', (int) $id)->findAll(),
         ]);
+    }
+
+    public function syncJotform()
+    {
+        if ($response = $this->guard()) return $response;
+
+        try {
+            $result = (new JotformService())->reconcileDeletedOrders();
+            $message = $result['deleted_orders'] === 1
+                ? 'Synchronized with Jotform and removed 1 deleted order from the website.'
+                : sprintf(
+                    'Synchronized with Jotform and removed %d deleted orders from the website.',
+                    $result['deleted_orders']
+                );
+
+            return redirect()->to('/admin/orders')->with('success', $message);
+        } catch (\Throwable $exception) {
+            log_message('error', 'Jotform order reconciliation failed: {message}', [
+                'message' => $exception->getMessage(),
+            ]);
+            return redirect()->to('/admin/orders')->with('error', $exception->getMessage());
+        }
     }
 
     public function updateStatus($id)
