@@ -25,6 +25,17 @@ jobs:
         working-directory: ./backend
         run: composer install --no-dev --prefer-dist --no-interaction --optimize-autoloader
 
+      - name: Create Jotform runtime configuration
+        working-directory: ./backend
+        env:
+          JOTFORM_API_KEY: ${{ secrets.JOTFORM_API_KEY }}
+        run: |
+          if [ -z "$JOTFORM_API_KEY" ]; then
+            echo "::error::The JOTFORM_API_KEY repository secret is missing."
+            exit 1
+          fi
+          php -r '$key = getenv("JOTFORM_API_KEY"); file_put_contents("app/Config/JotformSecrets.php", "<?php\n\nreturn " . var_export(["apiKey" => $key], true) . ";\n");'
+
       - name: Deploy to InfinityFree
         uses: SamKirkland/FTP-Deploy-Action@v4.4.0
         with:

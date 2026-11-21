@@ -17,7 +17,20 @@ class Jotform extends BaseConfig
     {
         parent::__construct();
 
-        $this->apiKey = trim((string) env('JOTFORM_API_KEY', ''));
+        // Local/Docker installs use .env. The deployment workflow creates the
+        // ignored runtime file below because the production host deliberately
+        // preserves its existing .env file between FTP deployments.
+        $runtimeApiKey = '';
+        $runtimeSecretsFile = __DIR__ . '/JotformSecrets.php';
+        if (is_file($runtimeSecretsFile)) {
+            $runtimeSecrets = require $runtimeSecretsFile;
+            if (is_array($runtimeSecrets)) {
+                $runtimeApiKey = trim((string) ($runtimeSecrets['apiKey'] ?? ''));
+            }
+        }
+
+        $environmentApiKey = trim((string) env('JOTFORM_API_KEY', ''));
+        $this->apiKey = $environmentApiKey !== '' ? $environmentApiKey : $runtimeApiKey;
         $configuredFormId = trim((string) env('JOTFORM_FORM_ID', $this->formId));
         if ($configuredFormId !== '') {
             $this->formId = $configuredFormId;
