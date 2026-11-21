@@ -2,6 +2,7 @@
     </div>
 </main>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/scroll-reveal.js" defer></script>
 <script>
 document.querySelectorAll('[data-admin-search]').forEach(function(input) {
     input.addEventListener('input', function() {
